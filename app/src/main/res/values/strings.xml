@@ -1,3 +1,22 @@
 <resources>
     <string name="app_name">TextAssistantApplication</string>
+
+    <string name="title">What should we write?</string>
+    <string name="subtitle">Type something and the assistant takes it from there.</string>
+    <string name="input_placeholder">Write something…</string>
+
+    <string name="action_generate">Generate</string>
+    <string name="action_cancel">Cancel</string>
+    <string name="action_share">Share</string>
+
+    <string name="suggestions_label">Try</string>
+
+    <string name="loading_title">Generating…</string>
+    <string name="loading_hint">You can keep editing and start a new request.</string>
+
+    <string name="success_badge">Done</string>
+
+    <string name="error_title">Something went wrong</string>
+    <string name="error_fallback_message">An unexpected error occurred. Please try again.</string>
+    <string name="error_hint">Your text is kept. Generate retries it.</string>
 </resources>
