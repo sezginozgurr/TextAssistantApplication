@@ -40,7 +40,7 @@ fun TextAssistantRoute(viewModel: TextAssistantViewModel = hiltViewModel()) {
     TextAssistantScreen(
         uiState = uiState,
         onAction = viewModel::onAction,
-        onShareClick = context::shareText,
+        onShareClick = { viewModel.currentUiState.shareableResult?.let(context::shareText) },
     )
 }
 
@@ -48,7 +48,7 @@ fun TextAssistantRoute(viewModel: TextAssistantViewModel = hiltViewModel()) {
 fun TextAssistantScreen(
     uiState: UiState,
     onAction: (UiAction) -> Unit,
-    onShareClick: (String) -> Unit,
+    onShareClick: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
     Surface(modifier = modifier.fillMaxSize(), color = MaterialTheme.colorScheme.background) {
@@ -60,7 +60,7 @@ fun TextAssistantScreen(
 private fun TextAssistantContent(
     uiState: UiState,
     onAction: (UiAction) -> Unit,
-    onShareClick: (String) -> Unit,
+    onShareClick: () -> Unit,
 ) {
     Column(
         modifier = Modifier
@@ -97,10 +97,10 @@ private fun TextAssistantContent(
 
                 is Status.Success -> SuccessCard(
                     result = status.result,
-                    onShareClick = { onShareClick(status.result) },
+                    onShareClick = onShareClick,
                 )
 
-                is Status.Error -> ErrorCard(message = status.message)
+                is Status.Error -> ErrorCard(error = status.error)
             }
         }
     }
@@ -113,7 +113,7 @@ private class UiStatePreviewProvider : PreviewParameterProvider<UiState> {
         UiState(input = "hello", status = Status.Success("Result: hello")),
         UiState(
             input = "error",
-            status = Status.Error("The service is currently unavailable. Please try again."),
+            status = Status.Error(TextAssistantError.ServiceUnavailable),
         ),
     )
 }

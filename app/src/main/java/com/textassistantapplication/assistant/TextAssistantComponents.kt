@@ -1,5 +1,6 @@
 package com.textassistantapplication.assistant
 
+import androidx.annotation.StringRes
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -223,7 +224,7 @@ internal fun SuccessCard(
 
 @Composable
 internal fun ErrorCard(
-    message: String?,
+    error: TextAssistantError,
     modifier: Modifier = Modifier,
 ) {
     Column(modifier = modifier, verticalArrangement = Arrangement.spacedBy(12.dp)) {
@@ -250,7 +251,7 @@ internal fun ErrorCard(
             }
             Spacer(Modifier.height(8.dp))
             Text(
-                text = message ?: stringResource(R.string.error_fallback_message),
+                text = stringResource(error.messageRes),
                 style = MaterialTheme.typography.bodyMedium,
                 color = MaterialTheme.colorScheme.onErrorContainer,
             )
@@ -264,6 +265,13 @@ internal fun ErrorCard(
         )
     }
 }
+
+@get:StringRes
+private val TextAssistantError.messageRes: Int
+    get() = when (this) {
+        TextAssistantError.ServiceUnavailable -> R.string.error_service_unavailable
+        TextAssistantError.Unknown -> R.string.error_unknown
+    }
 
 @Composable
 private fun DoneBadge() {

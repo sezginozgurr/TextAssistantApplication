@@ -7,13 +7,15 @@ object TextAssistantContract {
         val status: Status = Status.Idle,
     ) {
         val isLoading: Boolean get() = status is Status.Loading
+
+        val shareableResult: String? get() = (status as? Status.Success)?.result
     }
 
     sealed interface Status {
         data object Idle : Status
         data object Loading : Status
         data class Success(val result: String) : Status
-        data class Error(val message: String?) : Status
+        data class Error(val error: TextAssistantError) : Status
     }
 
     sealed interface UiAction {

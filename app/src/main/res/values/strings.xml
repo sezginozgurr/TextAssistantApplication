@@ -17,6 +17,7 @@
     <string name="success_badge">Done</string>
 
     <string name="error_title">Something went wrong</string>
-    <string name="error_fallback_message">An unexpected error occurred. Please try again.</string>
+    <string name="error_service_unavailable">The service is currently unavailable. Please try again.</string>
+    <string name="error_unknown">An unexpected error occurred. Please try again.</string>
     <string name="error_hint">Your text is kept. Generate retries it.</string>
-</resources>
+</resources>

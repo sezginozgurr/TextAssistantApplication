@@ -47,7 +47,7 @@ class TextAssistantViewModel @Inject constructor(
             } catch (e: CancellationException) {
                 throw e
             } catch (e: Exception) {
-                Status.Error(e.message)
+                Status.Error(e.toTextAssistantError())
             }
             if (requestId == latestRequestId) {
                 updateUiState { copy(status = status) }
