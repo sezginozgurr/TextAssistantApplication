@@ -1,4 +1,4 @@
-package com.appnatextassistant.core.share
+package com.textassistantapplication.core.share
 
 import android.content.Context
 import android.content.Intent

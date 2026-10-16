@@ -24,7 +24,7 @@ import androidx.compose.ui.tooling.preview.PreviewParameterProvider
 import androidx.compose.ui.unit.dp
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import com.appnatextassistant.core.share.shareText
+import com.textassistantapplication.core.share.shareText
 import com.textassistantapplication.assistant.TextAssistantContract.Status
 import com.textassistantapplication.assistant.TextAssistantContract.UiAction
 import com.textassistantapplication.assistant.TextAssistantContract.UiState
