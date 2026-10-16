@@ -12,23 +12,34 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.safeDrawingPadding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.Send
+import androidx.compose.material.icons.filled.Refresh
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
-import androidx.compose.ui.tooling.preview.PreviewParameterProvider
-import androidx.compose.ui.unit.dp
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import com.textassistantapplication.core.share.shareText
 import com.textassistantapplication.assistant.TextAssistantContract.Status
 import com.textassistantapplication.assistant.TextAssistantContract.UiAction
 import com.textassistantapplication.assistant.TextAssistantContract.UiState
+import com.textassistantapplication.assistant.components.ActionButtons
+import com.textassistantapplication.assistant.components.ErrorCard
+import com.textassistantapplication.assistant.components.Heading
+import com.textassistantapplication.assistant.components.InputField
+import com.textassistantapplication.assistant.components.LoadingCard
+import com.textassistantapplication.assistant.components.SuccessCard
+import com.textassistantapplication.assistant.components.SuggestionsRow
+import com.textassistantapplication.assistant.preview.UiStatePreviewProvider
+import com.textassistantapplication.core.share.shareText
 import com.textassistantapplication.ui.theme.TextAssistantApplicationTheme
+import com.textassistantapplication.uitoolkit.Spacing
+import com.textassistantapplication.uitoolkit.ThemedPreview
 
 private val Suggestions = listOf("hello", "slow first", "error")
 
@@ -66,8 +77,8 @@ private fun TextAssistantContent(
         modifier = Modifier
             .safeDrawingPadding()
             .verticalScroll(rememberScrollState())
-            .padding(horizontal = 20.dp, vertical = 16.dp),
-        verticalArrangement = Arrangement.spacedBy(16.dp),
+            .padding(horizontal = Spacing.XLarge, vertical = Spacing.Large),
+        verticalArrangement = Arrangement.spacedBy(Spacing.Large),
     ) {
         Heading()
         InputField(
@@ -76,7 +87,7 @@ private fun TextAssistantContent(
         )
         ActionButtons(
             isLoading = uiState.isLoading,
-            isRetry = uiState.status is Status.Error,
+            generateIcon = uiState.status.generateIcon(),
             onGenerateClick = { onAction(UiAction.OnGenerateClick) },
             onCancelClick = { onAction(UiAction.OnCancelClick) },
         )
@@ -106,19 +117,13 @@ private fun TextAssistantContent(
     }
 }
 
-private class UiStatePreviewProvider : PreviewParameterProvider<UiState> {
-    override val values = sequenceOf(
-        UiState(),
-        UiState(input = "slow first", status = Status.Loading),
-        UiState(input = "hello", status = Status.Success("Result: hello")),
-        UiState(
-            input = "error",
-            status = Status.Error(TextAssistantError.ServiceUnavailable),
-        ),
-    )
+/** After an error, Generate retries the same text, so it shows a retry icon. */
+private fun Status.generateIcon(): ImageVector = when (this) {
+    is Status.Error -> Icons.Filled.Refresh
+    else -> Icons.AutoMirrored.Filled.Send
 }
 
-@Preview(showBackground = true, backgroundColor = 0xFF0B0A12)
+@ThemedPreview
 @Composable
 private fun TextAssistantScreenPreview(
     @PreviewParameter(UiStatePreviewProvider::class) uiState: UiState,
