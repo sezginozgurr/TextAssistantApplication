@@ -1,4 +1,4 @@
-package com.appnatextassistant.testing
+package com.testing
 
 import com.textassistantapplication.data.ServiceUnavailableException
 import com.textassistantapplication.data.TextService

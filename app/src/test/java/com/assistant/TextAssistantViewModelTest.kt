@@ -1,7 +1,7 @@
-package com.appnatextassistant.ui.assistant
+package com.assistant
 
-import com.appnatextassistant.testing.ControllableTextService
-import com.appnatextassistant.testing.MainDispatcherRule
+import com.testing.ControllableTextService
+import com.testing.MainDispatcherRule
 import com.textassistantapplication.assistant.TextAssistantContract.Status
 import com.textassistantapplication.assistant.TextAssistantContract.UiAction
 import com.textassistantapplication.assistant.TextAssistantContract.UiState

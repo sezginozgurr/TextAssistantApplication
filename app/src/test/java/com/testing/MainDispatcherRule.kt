@@ -1,4 +1,4 @@
-package com.appnatextassistant.testing
+package com.testing
 
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
